@@ -22,11 +22,22 @@ export const Progress = ({ isActive, setNextIsActive, weight }: Props) => {
       intervalRef.current = setInterval(() => {
         setSeconds((Date.now() - startTimeRef.current!) / 1000);
       }, 10);
-    } else if (seconds >= totalSeconds) {
+    }
+
+    if (isActive && seconds >= totalSeconds) {
       // タイマーを停止
       clearInterval(intervalRef.current);
+      intervalRef.current = undefined;
+      startTimeRef.current = null;
       setSeconds(totalSeconds);
       setNextIsActive();
+    }
+
+    if (!isActive) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = undefined;
+      startTimeRef.current = null;
+      setSeconds(0);
     }
 
     return () => clearInterval(intervalRef.current);
@@ -35,38 +46,48 @@ export const Progress = ({ isActive, setNextIsActive, weight }: Props) => {
   const progressWidth = (seconds / totalSeconds) * 100;
 
   return (
-    <View style={styles.column}>
-      <Text>{weight}g</Text>
-      <View style={styles.progressContainer}>
-        <View style={[styles.progressBar, { width: `${progressWidth}%` }]} />
+    <View
+      style={{
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+      }}
+    >
+      <Text
+        style={{
+          fontSize: 24,
+        }}
+      >
+        {weight}g
+      </Text>
+      <View
+        style={{
+          height: 20,
+          width: '100%',
+          backgroundColor: '#e0e0e0',
+          borderRadius: 10,
+          overflow: 'hidden',
+          marginBottom: 10,
+        }}
+      >
+        <View
+          style={[
+            {
+              height: '100%',
+              backgroundColor: '#3b5998',
+              borderRadius: 10,
+            },
+            { width: `${progressWidth}%` },
+          ]}
+        />
       </View>
-      <Text style={styles.timerText}>
+      <Text
+        style={{
+          fontSize: 24,
+        }}
+      >
         {seconds.toFixed(2)}/{totalSeconds} 秒
       </Text>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  column: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-  },
-  progressContainer: {
-    height: 20,
-    width: '100%',
-    backgroundColor: '#e0e0e0',
-    borderRadius: 10,
-    overflow: 'hidden',
-    marginBottom: 10,
-  },
-  progressBar: {
-    height: '100%',
-    backgroundColor: '#3b5998',
-    borderRadius: 10,
-  },
-  timerText: {
-    fontSize: 24,
-  },
-});
