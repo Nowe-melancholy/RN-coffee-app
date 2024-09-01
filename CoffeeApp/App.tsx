@@ -2,7 +2,6 @@ import { useState } from 'react';
 import {
   Button,
   KeyboardAvoidingView,
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
@@ -39,7 +38,7 @@ export default function App() {
     setIsCollapsed(!isCollapsed);
   };
 
-  const [beansWeight, setBeansWeight] = useState('12');
+  const [beansWeight, setBeansWeight] = useState('15');
 
   const Taste = [
     { label: '普通', value: 'normal' },
@@ -88,8 +87,6 @@ export default function App() {
       fifthWaterWeight: 0,
     }))
     .exhaustive();
-
-  const isFifth = fifthWaterWeight !== 0;
 
   return (
     <KeyboardAvoidingView
@@ -198,39 +195,67 @@ export default function App() {
           isActive={firstIsActive}
           setNextIsActive={() => setSecondIsActive(true)}
           weight={firstWaterWeight}
+          totalSeconds={45}
         />
         <Progress
           isActive={secondIsActive}
           setNextIsActive={() => setThirdIsActive(true)}
           weight={firstWaterWeight + secondWaterWeight}
+          totalSeconds={45}
         />
-        <Progress
-          isActive={thirdIsActive}
-          setNextIsActive={() => setFourthIsActive(true)}
-          weight={firstWaterWeight + secondWaterWeight + thirdWaterWeight}
-        />
-        <Progress
-          isActive={fourthIsActive}
-          setNextIsActive={() => (isFifth ? setFifthIsActive(true) : {})}
-          weight={
-            firstWaterWeight +
-            secondWaterWeight +
-            thirdWaterWeight +
-            fourthWaterWeight
-          }
-        />
-        {isFifth && (
-          <Progress
-            isActive={fifthIsActive}
-            setNextIsActive={() => {}}
-            weight={
-              firstWaterWeight +
-              secondWaterWeight +
-              thirdWaterWeight +
-              fourthWaterWeight +
-              fifthWaterWeight
-            }
-          />
+
+        {concentration === 'normal' ? (
+          <>
+            <Progress
+              isActive={thirdIsActive}
+              setNextIsActive={() => setFourthIsActive(true)}
+              weight={firstWaterWeight + secondWaterWeight + thirdWaterWeight}
+              totalSeconds={45}
+            />
+            <Progress
+              isActive={fourthIsActive}
+              setNextIsActive={() => setFifthIsActive(true)}
+              weight={
+                firstWaterWeight +
+                secondWaterWeight +
+                thirdWaterWeight +
+                fourthWaterWeight
+              }
+              totalSeconds={30}
+            />
+            <Progress
+              isActive={fifthIsActive}
+              setNextIsActive={() => {}}
+              weight={
+                firstWaterWeight +
+                secondWaterWeight +
+                thirdWaterWeight +
+                fourthWaterWeight +
+                fifthWaterWeight
+              }
+              totalSeconds={45}
+            />
+          </>
+        ) : (
+          <>
+            <Progress
+              isActive={thirdIsActive}
+              setNextIsActive={() => setFourthIsActive(true)}
+              weight={firstWaterWeight + secondWaterWeight + thirdWaterWeight}
+              totalSeconds={60}
+            />
+            <Progress
+              isActive={fourthIsActive}
+              setNextIsActive={() => {}}
+              weight={
+                firstWaterWeight +
+                secondWaterWeight +
+                thirdWaterWeight +
+                fourthWaterWeight
+              }
+              totalSeconds={60}
+            />
+          </>
         )}
       </View>
       <Button onPress={toggle} title={firstIsActive ? 'Reset' : 'Start'} />

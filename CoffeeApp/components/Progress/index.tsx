@@ -1,19 +1,23 @@
 import { useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 
 type Props = {
   isActive: boolean;
   setNextIsActive: () => void;
   weight: number;
+  totalSeconds: number;
 };
 
-export const Progress = ({ isActive, setNextIsActive, weight }: Props) => {
+export const Progress = ({
+  isActive,
+  setNextIsActive,
+  weight,
+  totalSeconds,
+}: Props) => {
   const [seconds, setSeconds] = useState(0);
 
   const intervalRef = useRef<NodeJS.Timeout | undefined>(undefined);
   const startTimeRef = useRef<number | null>(null);
-
-  const totalSeconds = 42 as const;
 
   useEffect(() => {
     if (isActive && seconds < totalSeconds) {
