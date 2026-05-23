@@ -9,23 +9,22 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@expo/metro-runtime": "~3.2.1",
+    "@expo/metro-runtime": "~3.2.3",
     "@react-native-picker/picker": "^2.7.5",
-    "expo": "~51.0.2",
+    "expo": "~51.0.39",
+    "expo-dev-client": "~4.0.29",
     "expo-status-bar": "~1.12.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-native": "0.74.1",
+    "react-native": "0.74.5",
     "react-native-animatable": "^1.4.0",
     "react-native-collapsible": "^1.6.1",
     "react-native-web": "~0.19.6",
-    "ts-pattern": "^5.1.1",
-    "expo-dev-client": "~4.0.13"
+    "ts-pattern": "^5.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@types/react": "~18.2.45",
-    "@types/react-native": "^0.73.0",
     "typescript": "~5.3.3"
   },
   "private": true
